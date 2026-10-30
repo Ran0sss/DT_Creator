@@ -21,13 +21,18 @@ jobs:
       - name: Find project folder
         shell: pwsh
         run: |
-          $projects = Get-ChildItem -Directory | Where-Object {
-            Test-Path (Join-Path $_.FullName "requirements.txt")
-          }
-          if ($projects.Count -ne 1) {
+          $files = @(Get-ChildItem -Path $env:GITHUB_WORKSPACE -Filter requirements.txt -File -Recurse |
+            Where-Object { $_.FullName -notmatch '[\\/](\.venv|\.venv-build|venv|build|dist)[\\/]' })
+
+          if ($files.Count -ne 1) {
+            Write-Host "requirements.txt found: $($files.Count)"
+            $files | ForEach-Object { Write-Host $_.FullName }
             throw "Project folder not found or ambiguous"
           }
-          "PROJECT_DIR=$($projects[0].FullName)" >> $env:GITHUB_ENV
+
+          $project = $files[0].Directory.FullName
+          Write-Host "Project found: $project"
+          "PROJECT_DIR=$project" >> $env:GITHUB_ENV
 
       - name: Install dependencies
         shell: pwsh
