@@ -1,1 +1,44 @@
 
+name: Build DT Creator Windows
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Recuperer le projet
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installer les dependances
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "streamlit>=1.40,<2.0" altair pyarrow pyinstaller
+
+      - name: Construire DT Creator
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onedir --name DT_Creator --collect-all streamlit --collect-all altair --collect-all pyarrow --add-data "dt_creator;dt_creator" dt_creator/launcher.py
+
+      - name: Creer le ZIP
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "dist/DT_Creator" -DestinationPath "DT_Creator_Windows.zip" -Force
+
+      - name: Publier le resultat
+        uses: actions/upload-artifact@v4
+        with:
+          name: DT_Creator_Windows_x64
+          path: DT_Creator_Windows.zip
+          if-no-files-found: error
