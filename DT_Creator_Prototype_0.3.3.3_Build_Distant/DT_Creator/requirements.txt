@@ -1,2 +1,0 @@
-streamlit>=1.40,<2.0
-pyinstaller>=6.0,<7.0
