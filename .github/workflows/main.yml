@@ -42,6 +42,16 @@ jobs:
           python -m pip install pyinstaller
           python -c "import ctypes, _ctypes; print('ctypes OK')"
 
+          
+      - name: Check Streamlit version and configuration
+        shell: pwsh
+        run: |
+          python -c "import streamlit; print('Streamlit:', streamlit.__version__)"
+          python -m streamlit config show
+          Get-ChildItem Env: |
+            Where-Object { $_.Name -match 'STREAMLIT|VITE' }
+
+
       - name: Build application
         shell: pwsh
         run: |
