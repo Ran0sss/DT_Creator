@@ -2,6 +2,8 @@
 """Lanceur PyInstaller pour DT Creator."""
 import os
 import sys
+import threading
+import webbrowser
 from pathlib import Path
 from streamlit.web import bootstrap
 
@@ -12,8 +14,7 @@ def main():
     )
     app_path = bundle_dir / "dt_creator" / "app.py"
 
-    # Place le répertoire courant à côté de app.py.
-    # Streamlit pourra ainsi trouver .streamlit/config.toml.
+    # Permet à Streamlit de trouver sa configuration
     os.chdir(app_path.parent)
 
     flag_options = {
@@ -25,6 +26,12 @@ def main():
         "browser.serverPort": 8501,
         "browser.gatherUsageStats": False,
     }
+
+    # Ouvre l'application dans le navigateur par défaut
+    threading.Timer(
+        3.0,
+        lambda: webbrowser.open("http://localhost:8501/")
+    ).start()
 
     bootstrap.run(
         str(app_path),
