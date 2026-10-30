@@ -33,7 +33,7 @@ jobs:
       - name: Construire DT Creator
         shell: pwsh
         run: |
-          python -m PyInstaller --noconfirm --clean --onedir --name DT_Creator --collect-all streamlit --collect-all altair --collect-all pyarrow --add-data "dt_creator;dt_creator" dt_creator/launcher.py
+          python -m PyInstaller --noconfirm --clean --onedir --name DT_Creator --collect-all streamlit --collect-all altair --collect-all pyarrow --add-data "dt_creator;dt_creator" --add-data ".streamlit;dt_creator/.streamlit" dt_creator/launcher.py
 
       - name: Creer le ZIP
         shell: pwsh
