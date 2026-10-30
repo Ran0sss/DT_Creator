@@ -1,0 +1,22 @@
+CONSTRUCTION WINDOWS A DISTANCE — SANS PYTHON LOCAL
+
+Cette voie construit l'application sur un runner Windows GitHub Actions.
+Elle ne demande ni Python ni droits d'installation sur votre PC, mais requiert
+un compte/depôt GitHub autorise et l'acces au service GitHub Actions.
+
+1. Creer un depot prive GitHub (recommande pour le code du laboratoire).
+2. Y deposer le CONTENU de ce dossier DT_Creator (y compris .github/workflows).
+3. Dans GitHub, ouvrir Actions > Build DT Creator Windows > Run workflow.
+4. Attendre la fin du workflow.
+5. Ouvrir l'execution reussie, rubrique Artifacts, telecharger
+   DT_Creator_Windows_x64.
+6. Extraire le ZIP puis tester DT_Creator/DT_Creator.exe.
+
+Le workflow produit un paquet onedir et verifie ctypes/_ctypes avant build.
+Une construction verte ne garantit pas encore le fonctionnement de l'app :
+tester le demarrage et un export JSON avant diffusion.
+
+Confidentialite : verifier les regles du laboratoire avant d'envoyer le code
+sur un service externe, meme dans un depot prive. Les artefacts ne doivent pas
+contenir de donnees patients/laboratoire ou secrets. Ce workflow ne televerse
+que le dossier de distribution construit.
