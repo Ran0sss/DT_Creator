@@ -11,6 +11,10 @@ jobs:
   build:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        working-directory: DT_Creator
+
     steps:
       - name: Recuperer le projet
         uses: actions/checkout@v4
@@ -40,5 +44,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: DT_Creator_Windows_x64
-          path: DT_Creator_Windows.zip
+          path: DT_Creator/DT_Creator_Windows.zip
           if-no-files-found: error
