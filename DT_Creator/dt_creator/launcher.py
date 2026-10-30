@@ -9,6 +9,8 @@ def main():
     flag_options = {
         "server.address": "127.0.0.1",
         "browser.gatherUsageStats": False,
+        # Streamlit embedded by PyInstaller may misdetect development mode.
+        "global.developmentMode": False,
     }
     # Evite de repasser par l’interface CLI Click dans le processus PyInstaller.
     bootstrap.run(str(app_path), False, [], flag_options)
